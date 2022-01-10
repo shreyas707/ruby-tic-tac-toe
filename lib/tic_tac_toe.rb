@@ -2,6 +2,9 @@ require_relative 'player'
 
 class TicTacToe
 
+    PLAYER_1_SYMBOL = 'X'
+    PLAYER_2_SYMBOL = 'O'
+
     WIN_COMBINATIONS = [
         [1, 2, 3],
         [4, 5, 6],
@@ -14,14 +17,14 @@ class TicTacToe
     ]
 
     def initialize
-        @round = 1
         @grid = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
-        @player_1 = nil
-        @player_2 = nil
+    end
+    
+    def start_game
         print_grid
         get_players_details
     end
-
+    
     private
 
     def print_grid
@@ -35,13 +38,13 @@ class TicTacToe
     end
 
     def get_players_details
-        print "Enter Player 1 name (symbol 'X'): "
+        print "Enter Player 1 name (symbol '#{PLAYER_1_SYMBOL}'): "
         player_1_name = gets.chomp
-        @player_1 = Player.new(1, player_1_name)
+        @player_1 = Player.new(1, player_1_name, PLAYER_1_SYMBOL)
 
-        print "Enter Player 2 name (symbol 'O'): "
+        print "Enter Player 2 name (symbol '#{PLAYER_2_SYMBOL}'): "
         player_2_name = gets.chomp
-        @player_2 = Player.new(2, player_2_name)
+        @player_2 = Player.new(2, player_2_name, PLAYER_2_SYMBOL)
 
         play_game(@player_1)
     end
@@ -91,5 +94,3 @@ class TicTacToe
     end
 
 end
-
-TicTacToe.new

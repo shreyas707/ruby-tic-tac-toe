@@ -1,2 +1,6 @@
-#!/bin/bash
-ruby ./lib/tic_tac_toe.rb
+#!/usr/bin/env ruby
+
+require_relative '../lib/tic_tac_toe.rb'
+
+@tic_tac_toe = TicTacToe.new
+@tic_tac_toe.start_game
