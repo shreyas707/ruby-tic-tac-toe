@@ -1,20 +1,12 @@
 require_relative 'player'
+require 'pry'
 
 class TicTacToe
 
     PLAYER_1_SYMBOL = 'X'
     PLAYER_2_SYMBOL = 'O'
 
-    WIN_COMBINATIONS = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [1, 4, 7],
-        [2, 5, 8],
-        [3, 6, 9],
-        [1, 5, 9],
-        [3, 5, 7]
-    ]
+    WIN_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
     def initialize
         @grid = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
@@ -24,7 +16,7 @@ class TicTacToe
         print_grid
         get_players_details
     end
-    
+
     private
 
     def print_grid
@@ -56,13 +48,11 @@ class TicTacToe
         else
             print "\n#{current_player.name}, enter your move (1-9): "
             move = gets.chomp.to_i
-
             if valid_move?(move)
                 @grid[move-1] = current_player.symbol
-                current_player.moves.push(move)
                 print_grid
                 if game_won?(current_player)
-                    puts "GAME WON BY #{current_player.name}"
+                    puts "#{current_player.name} WON THE GAME"
                     exit
                 else
                     play_game(next_player(current_player))
@@ -83,10 +73,14 @@ class TicTacToe
     end
 
     def game_won?(player)
-        WIN_COMBINATIONS.each do |combination|
-            return true if (combination & player.moves.sort) == combination
+        WIN_COMBINATIONS.each do |win_combination|
+            return true if (win_combination & sorted_moves(player)) == win_combination
         end
         return false
+    end
+
+    def sorted_moves(player)
+        @grid.each_index.select { |i| @grid[i] == player.symbol }
     end
 
     def game_draw?

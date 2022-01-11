@@ -11,6 +11,5 @@ RSpec.describe 'Player' do
         expect(@player.number).to eq(number)
         expect(@player.name).to eq(name)
         expect(@player.symbol).to eq(symbol)
-        expect(@player.moves).to eq([])
     end
 end
